@@ -13,14 +13,7 @@ const app = express();
 const users_routes = require('./routes/users');
 const auth_routes = require('./routes/auth');
 const register_routes = require('./routes/register');
-const ambassador_routes = require('./routes/ambassadors');
-const answers_routes = require('./routes/answers');
-const events_routes = require('./routes/events');
-const fields_routes = require('./routes/fields');
-const type_fields_routes = require("./routes/typeFields");
-const forms_routes = require('./routes/forms');
 const roles_routes = require('./routes/roles');
-const schools_routes = require('./routes/schools');
 
 // CERTIFICATE
 const privateKey = fs.readFileSync('./certs/privkey.pem', 'utf8');
@@ -48,12 +41,12 @@ mongoose.connect(process.env.MONGO_URI, { authSource: "admin", "user": process.e
     .then((result) => {
         // IF THE CONNECTION IS ESTABLISHED, START HTTPS SERVER
         const httpsServer = https.createServer(credentials, app);
-        httpsServer.listen(8092, () => {
-            console.log('HTTPS Server running on port 8092');
+        httpsServer.listen(process.env.PORT, () => {
+            console.log(`HTTPS Server running on port ${process.env.PORT}`);
             console.log(`
                 Addresses :
-                    https://localhost:8092
-                    https://lab-rey.fr
+                    https://localhost:${process.env.PORT}
+                    https://lab-rey.fr:444
             `);
         });
     })
@@ -78,13 +71,6 @@ app.use('/api', verifyToken);
 app.use('/api/users', checkRoleAdmin, users_routes);
 
 // PUBLIC ROUTES
-app.use('/api/ambassador', ambassador_routes);
-app.use('/api/answers', answers_routes);
-app.use('/api/events', events_routes);
-app.use('/api/fields', fields_routes);
-app.use('/api/typeFields', type_fields_routes);
-app.use('/api/forms', forms_routes);
 app.use('/api/roles', roles_routes);
-app.use('/api/schools', schools_routes);
 
 app.get('/', (req, res) => { res.send([{ title: "API SERVEUR LAB-REY", message: "Vous êtes à la racine de l'API, ici il ne se passe rien, c'est triste :(" }]) })

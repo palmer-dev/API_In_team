@@ -1,6 +1,6 @@
 module.exports = {
   apps: [{
-    name: "NEXT-U-FORM",
+    name: "DBH-IN-TEAM",
     script: "./app.js",
     "watch": true,
     env_production: {
