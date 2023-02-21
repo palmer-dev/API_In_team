@@ -10,7 +10,7 @@ const RoleSchema = new mongoose.Schema({
     access: {
         type: mongoose.Schema.Types.Mixed
     }
-}, { timeseries: true });
+}, { timeseries: true, collection: "roles" });
 
 const Role = mongoose.model('Role', RoleSchema)
 

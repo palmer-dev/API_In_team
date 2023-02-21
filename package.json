@@ -19,6 +19,7 @@
     "jsonwebtoken": "^9.0.0",
     "mongodb": "^4.13.0",
     "mongoose": "^6.8.3",
+    "mongoose-autopopulate": "^0.17.1",
     "morgan": "^1.10.0"
   }
 }

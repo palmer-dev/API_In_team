@@ -14,6 +14,10 @@ const users_routes = require('./routes/users');
 const auth_routes = require('./routes/auth');
 const register_routes = require('./routes/register');
 const roles_routes = require('./routes/roles');
+const spareparts_routes = require("./routes/spareparts");
+const categories_routes = require("./routes/categories");
+const maintenance_routes = require("./routes/maintenances");
+const gmaoproducts_routes = require("./routes/gmaoproducts");
 
 // CERTIFICATE
 const privateKey = fs.readFileSync('./certs/privkey.pem', 'utf8');
@@ -52,7 +56,7 @@ mongoose.connect(process.env.MONGO_URI, { authSource: "admin", "user": process.e
     })
     .catch((err) => console.log(err));
 
-
+mongoose.set('debug', true)
 // GLOBAL PARAMETER FOR THE APP
 app.use(helmet());
 app.use(bodyParser.json());
@@ -65,12 +69,16 @@ app.use('/auth', auth_routes);
 app.use('/register', verifyToken, checkRoleAdmin, register_routes);
 
 // API ROUTES
-app.use('/api', verifyToken);
+// app.use('/api', verifyToken);
 
 // PRIVATE ROUTES
 app.use('/api/users', checkRoleAdmin, users_routes);
 
 // PUBLIC ROUTES
 app.use('/api/roles', roles_routes);
+app.use('/api/category', categories_routes);
+app.use('/api/spareparts', spareparts_routes);
+app.use('/api/maintenance', maintenance_routes);
+app.use('/api/gmaoproducts', gmaoproducts_routes);
 
 app.get('/', (req, res) => { res.send([{ title: "API SERVEUR LAB-REY", message: "Vous êtes à la racine de l'API, ici il ne se passe rien, c'est triste :(" }]) })

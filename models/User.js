@@ -44,9 +44,8 @@ const UserSchema = new mongoose.Schema({
             },
             message: '{VALUE} n\'est pas un numéro de téléphone valide!'
         }
-    },
-    school: [{ type: mongoose.Schema.Types.ObjectId, ref: 'School' }]
-}, { timeseries: true });
+    }
+}, { timeseries: true, collection: "users" });
 
 const User = mongoose.model('User', UserSchema)
 
